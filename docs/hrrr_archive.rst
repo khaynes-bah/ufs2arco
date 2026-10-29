@@ -1,3 +1,5 @@
+.. _hrrr-archive:
+
 HRRR Archive
 ############
 

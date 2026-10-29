@@ -1,3 +1,5 @@
+.. _anemoi-target:
+
 Anemoi Targets
 ##############
 

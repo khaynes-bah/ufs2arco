@@ -2,22 +2,114 @@ Moving Data
 -----------
 
 The main way to use ufs2arco is by creating a yaml "recipe" file, which
-describes
+describes:
 
-1. the data source
+|
 
-2. transforms to the data
+.. admonition::
+        **mover**: whether or not to use Message Passing Interface (MPI) to parallelize data transfer
+   :collapsible: closed
 
-3. the target data layout
+    + **name**: *str* 
+        Specifies whether or not to use Message Passing Interface (MPI)
+         Available Options:
+          * 'datamover': does not use MPI, moves data serially
+          * 'mpidatamover': uses MPI, allows for parallelization of data migration
+    + **batch_size**: *int*
+        Batch size; Must be >=1
+         For 'datamover', determines how many chunks to split the data into for serial data transfer.
+         For 'mpidatamover', determines how many processes will run in parallel to transfer data.
 
-4. directories specifying where to store the results
+.. admonition::
+        **directories**: directories specifying where to store the results
+   :collapsible: closed
 
-5. whether or not to use MPI
+    + **zarr**: *str* 
+        Filename for zarr output after ufs2arco run on source dataset 
+         *Example: 'dataset.zarr'*
+    + **cache**: *str*
+    + **logs**: *str*
+
+.. admonition::
+        **source**: the data source
+   :collapsible: closed
+
+    + **name**: *str* 
+        Specifies which source dataset to pull
+         Available Options:
+          * 'aws_aorc': NOAA's Analysis of Record for Calibration (AORC) dataset hosted on an AWS S3 bucket
+          * 'conus404': NCAR's CONterminous United States for over 40 years at 4 km resolution (CONUS404) dataset hosted on Planetary Computer's Azure Blob Storage 
+          * 'gcs_era5_1degree': European Centre for Medium-Range Weather Forecasts (ECMWF) Re-Analysis 5th Generation (ERA5) dataset hosted on NOAA's Unified Forecast System (UFS) Google Cloud Storage (GCS) bucket
+          * ':ref:`aws_gefs_archive<gefs-archive>`': GEFS Archive
+          * ':ref:`gfs_archive<gfs-archive>`': GFS Archive
+          * ':ref:`aws_hrrr_archive<hrrr-archive>`': NOAA's High-Resolution Rapid Refresh (HRRR) Archive dataset hosted on an AWS S3 bucket
+          * 'gcs_replay_atmosphere': Replay
+    + **time**: 
+          * **start**: *datetime*
+              Start date and time of dataset to pull
+               Example: '2017-01-01T00'
+          * **end**: *datetime*
+              End date and time of dataset to pull
+               Example: '2017-01-01T18'
+          * **freq**: *datetime*
+              Interval between each time step pulled
+               Example: '6h'
+    + **variables**: *list* 
+        Specifies which 
+    + **levels**: *list* 
+        Specifies which 
+    + **slices**: *, optional* 
+        Specifies which   
+          * **sel**
+    + **uri**: *str, optional* 
+        Specifies which 
+
+.. admonition::
+        **target**: target data format
+   :collapsible: closed
+
+    + **name**: *str* 
+        Specifies which target format to save the data in
+         Available Options:
+          * 'base': 
+          * ':ref:`anemoi<anemoi-target>`': 
+    + **sort_channels_by_levels**: *boolean*
+    + **forcings**: *list*
+        Specifies which target format to save the data in
+         Available Options:
+          * o
+              Start da
+          * o
+              End da
+          * o
+              Interval between
+    + **chunks**: *list*
+        Specifies which target format to save the data in
+         Available Options:
+          * o
+              Start da
+
+.. admonition::
+        **transforms**: *optional*, transforms to apply to the data
+   :collapsible: closed
+
+    + **divide**: *str* 
+        Specifies which target format to save the data in
+         Available Options:
+          * 'base': 
+          * ':ref:`anemoi<anemoi-target>`': 
+    + **mappings**: *boolean*
+    + **horizontal_regrid**: *list*
+    + **rotate_vectors**
+    + **vertical_regrid**
+
+
+|
 
 Once that recipe is created, the following command is used to run the workflow
 serially::
 
-    ufs2arco recipe.yaml
+    ufs2arco recipe.yaml   
 
 In order to use MPI to parallelize the data transfer, for example over 64
 processes, one would use::

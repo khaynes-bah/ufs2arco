@@ -1,0 +1,6 @@
+[tool.esbonio.sphinx]
+pythonCommand = ["uv", "run", "--no-project", "--with", "sphinx", "python"]
+buildCommand = ["sphinx-build", "-C", "-b", "html", ".", "${defaultBuildDir}"]
+
+[tool.esbonio.sphinx.configOverrides]
+root_doc = "moving_data"
